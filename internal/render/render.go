@@ -7,16 +7,20 @@ import (
 	"net/http"
 	"path/filepath"
 
+	"golang-bookings/internal/config"
+	"golang-bookings/internal/models"
+
 	"github.com/justinas/nosurf"
-	"github.com/lmSeryi/bookings/internal/config"
-	"github.com/lmSeryi/bookings/internal/modules"
 )
 
 var functions = template.FuncMap{}
 
 var app *config.AppConfig
 
-func AddDefaultData(td *modules.TemplateData, r *http.Request) *modules.TemplateData {
+func AddDefaultData(td *models.TemplateData, r *http.Request) *models.TemplateData {
+	td.Flash = app.Session.PopString(r.Context(), "flash")
+	td.Error = app.Session.PopString(r.Context(), "error")
+	td.Warning = app.Session.PopString(r.Context(), "warning")
 	td.CSRFToken = nosurf.Token(r)
 	return td
 }
@@ -27,7 +31,7 @@ func NewTemplates(a *config.AppConfig) {
 }
 
 // RenderTemplate helps to render a html template
-func RenderTemplate(w http.ResponseWriter, r *http.Request, tmpl string, td *modules.TemplateData) {
+func RenderTemplate(w http.ResponseWriter, r *http.Request, tmpl string, td *models.TemplateData) {
 	// get the template cache from the context
 	var tc map[string]*template.Template
 

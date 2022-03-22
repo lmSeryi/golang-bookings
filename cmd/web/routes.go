@@ -3,10 +3,11 @@ package main
 import (
 	"net/http"
 
+	"golang-bookings/internal/config"
+	"golang-bookings/internal/handlers"
+
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
-	"github.com/lmSeryi/bookings/internal/config"
-	"github.com/lmSeryi/bookings/internal/handlers"
 )
 
 // routes sets up the routes for the web application
@@ -27,6 +28,7 @@ func routes(app *config.AppConfig) http.Handler {
 	mux.Get("/contact", handlers.Repo.Contact)
 	mux.Get("/make-reservation", handlers.Repo.Reservation)
 	mux.Post("/make-reservation", handlers.Repo.PostReservation)
+	mux.Get("/reservation-summary", handlers.Repo.ReservationSummary)
 
 	fileServer := http.FileServer(http.Dir("./static/"))
 	mux.Handle("/static/*", http.StripPrefix("/static/", fileServer))

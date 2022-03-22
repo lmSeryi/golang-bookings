@@ -1,6 +1,6 @@
-package modules
+package models
 
-import "github.com/lmSeryi/bookings/internal/forms"
+import "golang-bookings/internal/forms"
 
 // TemplateData holds data sent from hanbdlers to the template
 type TemplateData struct {

@@ -1,4 +1,4 @@
-package modules
+package models
 
 // Reservation holds reservation type
 type Reservation struct {
